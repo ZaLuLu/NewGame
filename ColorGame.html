@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Color Clicker Game</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+            flex-direction: column;
+        }
+        #gameArea {
+            position: relative;
+            width: 400px;
+            height: 400px;
+            background-color: white;
+            border: 2px solid black;
+            overflow: hidden;
+        }
+        .target {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            background-color: red;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+        #score {
+            font-size: 20px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Color Clicker Game</h1>
+    <div id="gameArea"></div>
+    <p id="score">Score: 0</p>
+    <script>
+        let gameArea = document.getElementById("gameArea");
+        let scoreDisplay = document.getElementById("score");
+        let score = 0;
+
+        function spawnTarget() {
+            let target = document.createElement("div");
+            target.classList.add("target");
+            let x = Math.random() * (gameArea.clientWidth - 50);
+            let y = Math.random() * (gameArea.clientHeight - 50);
+            target.style.left = `${x}px`;
+            target.style.top = `${y}px`;
+            
+            target.addEventListener("click", () => {
+                score++;
+                scoreDisplay.textContent = `Score: ${score}`;
+                target.remove();
+                spawnTarget();
+            });
+            
+            gameArea.appendChild(target);
+        }
+
+        spawnTarget();
+    </script>
+</body>
+</html>
